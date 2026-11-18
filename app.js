@@ -21,6 +21,7 @@ const URL = process.env.MONGO_URL;
 const option = {
     user: process.env.DB_USER,
     pass: process.env.DB_PASS,
+    dbName: "e-commerce",
     autoIndex: true,
     serverSelectionTimeoutMS: 5000,
 };
