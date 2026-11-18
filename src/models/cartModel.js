@@ -7,7 +7,7 @@ const DataSchema = new mongoose.Schema(
         product_name:{type:String,require:true},
         color:{type:String,require:true},
         size:{type:String,require:true},
-        qnt:{type:Number,require:true},
+        qty:{type:Number,require:true},
         price:{type:Number}
     },
     {
