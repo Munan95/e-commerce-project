@@ -12,5 +12,6 @@ router.get("/", (req, res) => {
 
 //For Super Admin
 router.post("/admin-register", adminController.register);
+router.post("/admin-login", adminController.login);
 
 module.exports = router;
