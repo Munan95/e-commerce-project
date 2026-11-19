@@ -66,3 +66,38 @@ exports.login = async (req, res) => {
         });
     }
 };
+
+//Get Admin
+exports.admin = async (req, res) => {
+    try {
+        const email = req.headers.email;
+
+        const matchStage = {
+            $match:{email}
+        };
+
+        const project = {
+            $project:{
+                password:0
+            }
+        };
+
+        const data = await adminModel.aggregate([matchStage,project]);
+
+        if (!data.length) {
+            return res.status(404).json({ success: false, message: "Admin not found" });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: data[0]
+        });
+        console.log(data);
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: error.toString(),
+            message: "Something went wrong."
+        });
+    }
+};

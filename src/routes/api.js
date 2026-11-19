@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const adminController = require("../controllers/adminController.js");
+const authVarificationAdmin = require("../middlewares/authVarificationAdmin.js");
 
 router.get("/", (req, res) => {
     res.status(200).json({
@@ -13,5 +14,6 @@ router.get("/", (req, res) => {
 //For Super Admin
 router.post("/admin-register", adminController.register);
 router.post("/admin-login", adminController.login);
+router.get("/admin", authVarificationAdmin, adminController.admin);
 
 module.exports = router;
