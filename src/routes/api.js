@@ -15,5 +15,6 @@ router.get("/", (req, res) => {
 router.post("/admin-register", adminController.register);
 router.post("/admin-login", adminController.login);
 router.get("/admin", authVarificationAdmin, adminController.admin);
+router.get("/admin-verify", authVarificationAdmin, adminController.adminVerify);
 
 module.exports = router;
