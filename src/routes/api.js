@@ -16,5 +16,6 @@ router.post("/admin-register", adminController.register);
 router.post("/admin-login", adminController.login);
 router.get("/admin", authVarificationAdmin, adminController.admin);
 router.get("/admin-verify", authVarificationAdmin, adminController.adminVerify);
+router.get("/admin-logout", authVarificationAdmin, adminController.logout);
 
 module.exports = router;
