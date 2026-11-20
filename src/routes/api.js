@@ -29,5 +29,6 @@ router.post("/user-register", userController.register);
 router.post("/user-login", userController.login);
 router.get("/user", authVarificationUser, userController.user);
 router.get("/user-verify", authVarificationUser, userController.userVerify);
+router.get("/user-logout", authVarificationUser, userController.logout);
 
 module.exports = router;
