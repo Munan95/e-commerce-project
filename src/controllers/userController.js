@@ -96,7 +96,7 @@ exports.user = async (req, res) => {
         const data = await userModel.aggregate([matchStage,project]);
 
         if (!data.length) {
-            return res.status(404).json({ success: false, message: "user not found" });
+            return res.status(404).json({ success: false, message: "User not found" });
         }
 
         res.status(200).json({

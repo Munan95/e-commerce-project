@@ -1,9 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
+//Controller
 const adminController = require("../controllers/adminController.js");
 const userController = require("../controllers/userController.js");
+
+//Middleware
 const authVarificationAdmin = require("../middlewares/authVarificationAdmin.js");
+const authVarificationUser = require("../middlewares/authVarificationUser.js");
 
 router.get("/", (req, res) => {
     res.status(200).json({
@@ -23,5 +27,6 @@ router.put("/admin-update", authVarificationAdmin, adminController.update);
 //For user
 router.post("/user-register", userController.register);
 router.post("/user-login", userController.login);
+router.get("/user", authVarificationUser, userController.user);
 
 module.exports = router;
