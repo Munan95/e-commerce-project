@@ -36,10 +36,9 @@ const DataSchema = new mongoose.Schema(
 );
 
 //Hash password before saving
-DataSchema.pre("save", async (next) => {
-    if(!this.isModified("password")) return next();
+DataSchema.pre("save", async function() {
+    if(!this.isModified("password")) return;
     this.password = await bcrypt.hash(this.password,10);
-    next();
 });
 
 const userModel = mongoose.model("users",DataSchema);
