@@ -148,37 +148,77 @@ exports.logout = async (req, res) => {
 //Update user password
 exports.update = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const email = req.headers.email;
         const _id = req.headers._id;
-        const updateData = {email};
-        const user = await userModel.findOne({email,_id});
+
+        const {
+            password,
+            cus_name,
+            cus_add,
+            cus_city,
+            cus_country,
+            cus_fax,
+            cus_phone,
+            cus_postcode,
+            cus_state,
+            ship_name,
+            ship_add,
+            ship_city,
+            ship_country,
+            ship_phone,
+            ship_postcode,
+            ship_state,
+        } = req.body;
+
+        const updateData = {
+            email,
+            password,
+            cus_name,
+            cus_add,
+            cus_city,
+            cus_country,
+            cus_fax,
+            cus_phone,
+            cus_postcode,
+            cus_state,
+            ship_name,
+            ship_add,
+            ship_city,
+            ship_country,
+            ship_phone,
+            ship_postcode,
+            ship_state,
+        };
+
+        const user = await userModel.findOne({ email, _id });
 
         if (!user) {
             return res.status(200).json({ success: false, message: "Invalid email" });
         }
 
         //Password update before hash by bcrypt
-        if(password){
-            const hashedPassword = await bcrypt.hash(password,10);
+        if (password) {
+            const hashedPassword = await bcrypt.hash(password, 10);
             updateData.password = hashedPassword;
         }
 
         //Update user 
-        const updatedUser = await userModel.findByIdAndUpdate(_id,updateData,{
-            new:true
+        const updatedUser = await userModel.findByIdAndUpdate(_id, updateData, {
+            new: true
         });
 
         //Update token
-        const token = EncodeToken(updatedUser?.email,updatedUser?._id.toString());
+        const token = EncodeToken(updatedUser?.email, updatedUser?._id.toString());
 
         //Update cookies
-        res.cookie("a_token",token,options);
+        res.cookie("u_token", token, options);
 
         res.status(200).json({
             success: true,
-            message: "user updated successfully",
-            user:{
-                email:updatedUser.email
+            message: "User updated successfully",
+            user: {
+                email: updatedUser.email,
+                id: updatedUser._id
             }
         });
     } catch (error) {
