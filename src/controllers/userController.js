@@ -58,7 +58,7 @@ exports.login = async (req, res) => {
         let token = EncodeToken(user.email, user._id.toString());
 
         //Set cookies
-        res.cookie("a_token", token, options);
+        res.cookie("u_token", token, options);
 
         res.status(200).json({
             success: true,
