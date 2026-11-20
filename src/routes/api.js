@@ -4,6 +4,7 @@ const router = express.Router();
 //Controller
 const adminController = require("../controllers/adminController.js");
 const userController = require("../controllers/userController.js");
+const productController = require("../controllers/productController.js");
 
 //Middleware
 const authVarificationAdmin = require("../middlewares/authVarificationAdmin.js");
@@ -31,5 +32,8 @@ router.get("/user", authVarificationUser, userController.user);
 router.get("/user-verify", authVarificationUser, userController.userVerify);
 router.get("/user-logout", authVarificationUser, userController.logout);
 router.put("/user-update", authVarificationUser, userController.update);
+
+//For product
+router.post("/product-create", authVarificationAdmin, productController.create);
 
 module.exports = router;
