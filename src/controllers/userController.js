@@ -84,16 +84,16 @@ exports.user = async (req, res) => {
         const email = req.headers.email;
 
         const matchStage = {
-            $match:{email}
+            $match: { email }
         };
 
         const project = {
-            $project:{
-                password:0
+            $project: {
+                password: 0
             }
         };
 
-        const data = await userModel.aggregate([matchStage,project]);
+        const data = await userModel.aggregate([matchStage, project]);
 
         if (!data.length) {
             return res.status(404).json({ success: false, message: "User not found" });
