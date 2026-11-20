@@ -133,3 +133,48 @@ exports.logout = async (req, res) => {
         });
     }
 };
+
+//Update admin password
+exports.update = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const _id = req.headers._id;
+        const updateData = {email};
+        const user = await adminModel.findOne({email,_id});
+
+        if (!user) {
+            return res.status(200).json({ success: false, message: "Invalid email" });
+        }
+
+        //Password update before hash by bcrypt
+        if(password){
+            const hashedPassword = await bcrypt.hash(password,10);
+            updateData.password = hashedPassword;
+        }
+
+        //Update user 
+        const updatedUser = await adminModel.findByIdAndUpdate(_id,updateData,{
+            new:true
+        });
+
+        //Update token
+        const token = EncodeToken(updatedUser?.email,updatedUser?._id.toString());
+
+        //Update cookies
+        res.cookie("a_token",token,options);
+
+        res.status(200).json({
+            success: true,
+            message: "Admin updated successfully",
+            user:{
+                email:updatedUser.email
+            }
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: error.toString(),
+            message: "Something went wrong."
+        });
+    }
+};
