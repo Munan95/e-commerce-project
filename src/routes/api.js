@@ -28,5 +28,6 @@ router.put("/admin-update", authVarificationAdmin, adminController.update);
 router.post("/user-register", userController.register);
 router.post("/user-login", userController.login);
 router.get("/user", authVarificationUser, userController.user);
+router.get("/user-verify", authVarificationUser, userController.userVerify);
 
 module.exports = router;
