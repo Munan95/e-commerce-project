@@ -10,13 +10,6 @@ const productController = require("../controllers/productController.js");
 const authVarificationAdmin = require("../middlewares/authVarificationAdmin.js");
 const authVarificationUser = require("../middlewares/authVarificationUser.js");
 
-router.get("/", (req, res) => {
-    res.status(200).json({
-        success: true,
-        message: "API is working!",
-    });
-});
-
 //For Super Admin
 router.post("/admin-register", adminController.register);
 router.post("/admin-login", adminController.login);
@@ -35,5 +28,6 @@ router.put("/user-update", authVarificationUser, userController.update);
 
 //For product
 router.post("/product-create", authVarificationAdmin, productController.create);
+router.get("/all-products/:category_id/:brand_id/:remark/:keyword/:per_page/:page_no", productController.allProduct);
 
 module.exports = router;
