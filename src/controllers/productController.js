@@ -118,7 +118,23 @@ exports.allProduct = async (req, res) => {
                     {$sort:sortStage},
                     {$skip:skipRow},
                     {$limit:per_page},
-                    joinWitCategory
+                    joinWitCategory,
+                    {
+                        $project:{
+                            _id:1,
+                            category_id:1,
+                            brand_id:1,
+                            tittle:1,
+                            images:1,
+                            price:1,
+                            is_discount:1,
+                            discount_price:1,
+                            remark:1,
+                            stock:1,
+                            createAt:1,
+                            "category.category_name":1
+                        }
+                    }
                 ]
             }
         }
