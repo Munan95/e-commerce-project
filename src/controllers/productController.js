@@ -155,3 +155,47 @@ exports.allProduct = async (req, res) => {
         });
     }
 };
+
+//Single Product
+exports.singleProduct = async (req, res) => {
+    try {
+        const id = new ObjectId(req.params.id);
+
+        let matchStage = {
+            $match: { _id: id }
+        }
+
+        const joinWitCategory = {
+            $lookup: {
+                from: "categories",
+                localField: "category_id",
+                foreignField: "_id",
+                as: "category"
+            }
+        }
+
+        const joinWitBrand = {
+            $lookup: {
+                from: "brands",
+                localField: "brand_id",
+                foreignField: "_id",
+                as: "brand"
+            }
+        }
+
+        //Fetch single product
+        const product = await productModel.aggregate([matchStage, joinWitCategory, joinWitBrand]);
+
+        res.status(200).json({
+            success: true,
+            message: "Product fetched successfully",
+            product
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: error.toString(),
+            message: "Something went wrong."
+        });
+    }
+};
