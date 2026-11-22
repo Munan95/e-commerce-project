@@ -5,6 +5,7 @@ const router = express.Router();
 const adminController = require("../controllers/adminController.js");
 const userController = require("../controllers/userController.js");
 const productController = require("../controllers/productController.js");
+const categoryController = require("../controllers/categoryController.js");
 
 //Middleware
 const authVarificationAdmin = require("../middlewares/authVarificationAdmin.js");
@@ -32,5 +33,8 @@ router.get("/all-products/:category_id/:brand_id/:remark/:keyword/:per_page/:pag
 router.get("/single-product/:id", productController.singleProduct);
 router.put("/product-update/:id", productController.update);
 router.delete("/product-delete/:id", productController.delete);
+
+//For category
+router.post("/category-create", categoryController.create);
 
 module.exports = router;
