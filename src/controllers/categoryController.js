@@ -103,3 +103,30 @@ exports.singleCategory = async (req, res) => {
         });
     }
 };
+
+//Update category
+exports.update = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { category_name, category_img } = req.body;
+
+        //Update single category info
+        const category = await categoryModel.findByIdAndUpdate(
+            id,
+            { category_name, category_img },
+            { returnDocument: "after" }
+        );
+
+        res.status(200).json({
+            success: true,
+            message: "Category updated successfully",
+            category
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: error.toString(),
+            message: "Something went wrong."
+        });
+    }
+};
