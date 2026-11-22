@@ -81,3 +81,25 @@ exports.allCategory = async (req, res) => {
         });
     }
 };
+
+//Single category
+exports.singleCategory = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        //Fetch single category
+        const category = await categoryModel.findById(id);
+
+        res.status(200).json({
+            success: true,
+            message: "Category fetched successfully1",
+            category
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: error.toString(),
+            message: "Something went wrong."
+        });
+    }
+};

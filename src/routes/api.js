@@ -37,5 +37,6 @@ router.delete("/product-delete/:id", productController.delete);
 //For category
 router.post("/category-create", categoryController.create);
 router.get("/all-category/:per_page/:page_no", categoryController.allCategory);
+router.get("/single-category/:id", categoryController.singleCategory);
 
 module.exports = router;
