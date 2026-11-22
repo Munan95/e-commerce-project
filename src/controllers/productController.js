@@ -112,27 +112,27 @@ exports.allProduct = async (req, res) => {
         }
 
         const facetStage = {
-            $facet:{
-                totalcount:[{$count:"count"}],
-                products:[
-                    {$sort:sortStage},
-                    {$skip:skipRow},
-                    {$limit:per_page},
+            $facet: {
+                totalcount: [{ $count: "count" }],
+                products: [
+                    { $sort: sortStage },
+                    { $skip: skipRow },
+                    { $limit: per_page },
                     joinWitCategory,
                     {
-                        $project:{
-                            _id:1,
-                            category_id:1,
-                            brand_id:1,
-                            tittle:1,
-                            images:1,
-                            price:1,
-                            is_discount:1,
-                            discount_price:1,
-                            remark:1,
-                            stock:1,
-                            createAt:1,
-                            "category.category_name":1
+                        $project: {
+                            _id: 1,
+                            category_id: 1,
+                            brand_id: 1,
+                            tittle: 1,
+                            images: 1,
+                            price: 1,
+                            is_discount: 1,
+                            discount_price: 1,
+                            remark: 1,
+                            stock: 1,
+                            createAt: 1,
+                            "category.category_name": 1
                         }
                     }
                 ]
@@ -140,12 +140,12 @@ exports.allProduct = async (req, res) => {
         }
 
         //Fetch all products
-        const products = await productModel.aggregate([MachingStage,facetStage]);
+        const products = await productModel.aggregate([MachingStage, facetStage]);
 
         res.status(200).json({
             success: true,
             message: "Product fetched successfully",
-            data:products[0]
+            data: products[0]
         })
     } catch (error) {
         res.status(500).json({
@@ -228,7 +228,7 @@ exports.update = async (req, res) => {
         }
 
         //Update info
-        const product = await productModel.findByIdAndUpdate( id , {
+        const product = await productModel.findByIdAndUpdate(id, {
             tittle,
             images,
             sort_description,
