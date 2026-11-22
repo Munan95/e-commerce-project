@@ -31,5 +31,6 @@ router.post("/product-create", authVarificationAdmin, productController.create);
 router.get("/all-products/:category_id/:brand_id/:remark/:keyword/:per_page/:page_no", productController.allProduct);
 router.get("/single-product/:id", productController.singleProduct);
 router.put("/product-update/:id", productController.update);
+router.delete("/product-delete/:id", productController.delete);
 
 module.exports = router;
