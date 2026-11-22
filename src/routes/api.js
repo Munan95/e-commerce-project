@@ -30,5 +30,6 @@ router.put("/user-update", authVarificationUser, userController.update);
 router.post("/product-create", authVarificationAdmin, productController.create);
 router.get("/all-products/:category_id/:brand_id/:remark/:keyword/:per_page/:page_no", productController.allProduct);
 router.get("/single-product/:id", productController.singleProduct);
+router.put("/product-update/:id", productController.update);
 
 module.exports = router;

@@ -199,3 +199,62 @@ exports.singleProduct = async (req, res) => {
         });
     }
 };
+
+//Update single product info
+exports.update = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const {
+            tittle,
+            images,
+            sort_description,
+            price,
+            is_discount,
+            discount_price,
+            remark,
+            stock,
+            color,
+            size,
+            description,
+            category_id,
+            brand_id
+        } = req.body;
+
+        if (is_discount > price) {
+            return res.status(200).json({
+                success: false,
+                message: "Discount price must be smaller than main price"
+            })
+        }
+
+        //Update info
+        const product = await productModel.findByIdAndUpdate( id , {
+            tittle,
+            images,
+            sort_description,
+            price,
+            is_discount,
+            discount_price,
+            remark,
+            stock,
+            color,
+            size,
+            description,
+            category_id,
+            brand_id
+        },
+            { returnDocument: "after" }
+        );
+        res.status(200).json({
+            success: true,
+            message: "Product updated successfully",
+            product
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: error.toString(),
+            message: "Something went wrong."
+        });
+    }
+};
