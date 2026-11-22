@@ -1,4 +1,5 @@
 const categoryModel = require("../models/categoryModel");
+const productModel = require("../models/productModel");
 
 //Create category
 exports.create = async (req, res) => {
@@ -122,6 +123,36 @@ exports.update = async (req, res) => {
             message: "Category updated successfully",
             category
         })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: error.toString(),
+            message: "Something went wrong."
+        });
+    }
+};
+
+//Delete category
+exports.delete = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        //Product exist
+        const products = await productModel.find({ category_id: id })
+        if (products.leanth > 0) {
+            return res.status(200).json({
+                success: false,
+                message: "Please delete all product with this category first"
+            });
+        }
+
+        //Delete single category
+        await categoryModel.findByIdAndDelete(id);
+
+        res.status(200).json({
+            success: true,
+            message: "Category deleted successfully"
+        });
     } catch (error) {
         res.status(500).json({
             success: false,
