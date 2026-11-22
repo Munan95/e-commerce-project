@@ -5,7 +5,7 @@ exports.create = async (req, res) => {
     try {
         const { brand_name, brand_img } = req.body;
 
-        //New category add
+        //New brand add
         const brand = await brandModel.create({ brand_name, brand_img });
 
         res.status(200).json({
@@ -72,6 +72,28 @@ exports.allBrand = async (req, res) => {
             success: true,
             message: "Brand fetched successfully",
             data: brand[0]
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: error.toString(),
+            message: "Something went wrong."
+        });
+    }
+};
+
+//Single brand
+exports.singleBrand = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        //Fetch single brand
+        const brand = await brandModel.findById(id);
+
+        res.status(200).json({
+            success: true,
+            message: "Brand fetched successfully",
+            brand
         })
     } catch (error) {
         res.status(500).json({

@@ -93,7 +93,7 @@ exports.singleCategory = async (req, res) => {
 
         res.status(200).json({
             success: true,
-            message: "Category fetched successfully1",
+            message: "Category fetched successfully",
             category
         })
     } catch (error) {
