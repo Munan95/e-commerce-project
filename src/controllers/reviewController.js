@@ -1,4 +1,6 @@
+const mongoose = require("mongoose");
 const reviewModel = require("../models/reviewModel");
+const ObjectId = mongoose.Types.ObjectId;
 
 //Create review
 exports.create = async (req, res) => {
@@ -96,6 +98,56 @@ exports.allReview = async (req, res) => {
             success: true,
             message: "Review fetched successfully",
             data: review[0]
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: error.toString(),
+            message: "Something went wrong."
+        });
+    }
+};
+
+//All review by product
+exports.allReviewByProduct = async (req, res) => {
+    try {
+        const product_id = new ObjectId(req.params.product_id);
+
+        const matchingStage = {
+            $match: {
+                product_id
+            }
+        };
+
+        const joinWitUser = {
+            $lookup: {
+                from: "users",
+                localField: "user_id",
+                foreignField: "_id",
+                as: "user"
+            }
+        };
+
+        const unwindStageUser = { $unwind: "$user" };
+
+        const projectStage = {
+            $project: {
+                createdAt: 1,
+                updatedAt: 1,
+                des: 1,
+                rating: 1,
+                "user.cus_name": 1,
+                "user.email": 1
+            }
+        };
+
+        //Fetch all review
+        const review = await reviewModel.aggregate([matchingStage, joinWitUser, unwindStageUser, projectStage]);
+
+        res.status(200).json({
+            success: true,
+            message: "Review fetched successfully",
+            reviews: review
         })
     } catch (error) {
         res.status(500).json({
