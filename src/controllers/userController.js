@@ -204,7 +204,7 @@ exports.update = async (req, res) => {
 
         //Update user 
         const updatedUser = await userModel.findByIdAndUpdate(_id, updateData, {
-            new: true
+            returnDocument: "after"
         });
 
         //Update token
