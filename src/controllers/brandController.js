@@ -103,3 +103,30 @@ exports.singleBrand = async (req, res) => {
         });
     }
 };
+
+//Update brand
+exports.update = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { brand_name, brand_img } = req.body;
+
+        //Update single brand info
+        const brand = await brandModel.findByIdAndUpdate(
+            id,
+            { brand_name, brand_img },
+            { returnDocument: "after" }
+        );
+
+        res.status(200).json({
+            success: true,
+            message: "Brand updated successfully",
+            brand
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: error.toString(),
+            message: "Something went wrong."
+        });
+    }
+};

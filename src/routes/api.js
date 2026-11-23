@@ -46,5 +46,6 @@ router.delete("/category-delete/:id", categoryController.delete);
 router.post("/brand-create", brandController.create);
 router.get("/all-brand/:per_page/:page_no", brandController.allBrand);
 router.get("/single-brand/:id", brandController.singleBrand);
+router.put("/brand-update/:id", brandController.update);
 
 module.exports = router;
