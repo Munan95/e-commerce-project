@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 
 const DataSchema = new mongoose.Schema(
     {
-        user_id:{type:mongoose.Schema.Types.ObjectId,require: true},
-        product_id:{type:mongoose.Schema.Types.ObjectId,require: true},
-        invoice_id:{type:mongoose.Schema.Types.ObjectId,require: true},
+        user_id: { type: mongoose.Schema.Types.ObjectId, require: true },
+        product_id: { type: mongoose.Schema.Types.ObjectId, require: true },
+        invoice_id: { type: mongoose.Schema.Types.ObjectId, require: true },
 
-        des:{type:String,require:true},
-        rating:{type:Number,require:true}
+        des: { type: String, require: true },
+        rating: { type: Number, require: true }
     },
     {
         timestamps: true,
@@ -15,6 +15,6 @@ const DataSchema = new mongoose.Schema(
     }
 );
 
-const reviewModel = mongoose.model("reviews",DataSchema);
+const reviewModel = mongoose.model("reviews", DataSchema);
 
 module.exports = reviewModel;

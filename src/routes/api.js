@@ -7,6 +7,7 @@ const userController = require("../controllers/userController.js");
 const productController = require("../controllers/productController.js");
 const categoryController = require("../controllers/categoryController.js");
 const brandController = require("../controllers/brandController.js");
+const reviewController = require("../controllers/reviewController.js");
 
 //Middleware
 const authVarificationAdmin = require("../middlewares/authVarificationAdmin.js");
@@ -48,5 +49,8 @@ router.get("/all-brand/:per_page/:page_no", brandController.allBrand);
 router.get("/single-brand/:id", brandController.singleBrand);
 router.put("/brand-update/:id", authVarificationAdmin, brandController.update);
 router.delete("/brand-delete/:id", authVarificationAdmin, brandController.delete);
+
+//For review
+router.post("/review-create", authVarificationUser, reviewController.create);
 
 module.exports = router;
