@@ -1,4 +1,5 @@
 const brandModel = require("../models/brandModel");
+const productModel = require("../models/productModel");
 
 //Create brand
 exports.create = async (req, res) => {
@@ -122,6 +123,36 @@ exports.update = async (req, res) => {
             message: "Brand updated successfully",
             brand
         })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: error.toString(),
+            message: "Something went wrong."
+        });
+    }
+};
+
+//Delete brand
+exports.delete = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        //Product exist
+        const products = await productModel.find({ brand_id: id })
+        if (products.leanth > 0) {
+            return res.status(200).json({
+                success: false,
+                message: "Please delete all product with this brand first"
+            });
+        }
+
+        //Delete single brand
+        await brandModel.findByIdAndDelete(id);
+
+        res.status(200).json({
+            success: true,
+            message: "Brand deleted successfully"
+        });
     } catch (error) {
         res.status(500).json({
             success: false,
