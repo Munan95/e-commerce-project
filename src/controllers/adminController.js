@@ -73,16 +73,16 @@ exports.admin = async (req, res) => {
         const email = req.headers.email;
 
         const matchStage = {
-            $match:{email}
+            $match: { email }
         };
 
         const project = {
-            $project:{
-                password:0
+            $project: {
+                password: 0
             }
         };
 
-        const data = await adminModel.aggregate([matchStage,project]);
+        const data = await adminModel.aggregate([matchStage, project]);
 
         if (!data.length) {
             return res.status(404).json({ success: false, message: "Admin not found" });
@@ -139,35 +139,35 @@ exports.update = async (req, res) => {
     try {
         const { email, password } = req.body;
         const _id = req.headers._id;
-        const updateData = {email};
-        const user = await adminModel.findOne({email,_id});
+        const updateData = { email };
+        const user = await adminModel.findOne({ email, _id });
 
         if (!user) {
             return res.status(200).json({ success: false, message: "Invalid email" });
         }
 
         //Password update before hash by bcrypt
-        if(password){
-            const hashedPassword = await bcrypt.hash(password,10);
+        if (password) {
+            const hashedPassword = await bcrypt.hash(password, 10);
             updateData.password = hashedPassword;
         }
 
         //Update user 
-        const updatedUser = await adminModel.findByIdAndUpdate(_id,updateData,{
-            new:true
+        const updatedUser = await adminModel.findByIdAndUpdate(_id, updateData, {
+            returnDocument: "after"
         });
 
         //Update token
-        const token = EncodeToken(updatedUser?.email,updatedUser?._id.toString());
+        const token = EncodeToken(updatedUser?.email, updatedUser?._id.toString());
 
         //Update cookies
-        res.cookie("a_token",token,options);
+        res.cookie("a_token", token, options);
 
         res.status(200).json({
             success: true,
             message: "Admin updated successfully",
-            user:{
-                email:updatedUser.email
+            user: {
+                email: updatedUser.email
             }
         });
     } catch (error) {
