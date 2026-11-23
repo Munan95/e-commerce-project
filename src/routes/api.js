@@ -52,5 +52,6 @@ router.delete("/brand-delete/:id", authVarificationAdmin, brandController.delete
 
 //For review
 router.post("/review-create", authVarificationUser, reviewController.create);
+router.get("/all-review/:per_page/:page_no", reviewController.allReview);
 
 module.exports = router;
