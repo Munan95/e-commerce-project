@@ -32,21 +32,21 @@ router.put("/user-update", authVarificationUser, userController.update);
 router.post("/product-create", authVarificationAdmin, productController.create);
 router.get("/all-products/:category_id/:brand_id/:remark/:keyword/:per_page/:page_no", productController.allProduct);
 router.get("/single-product/:id", productController.singleProduct);
-router.put("/product-update/:id", productController.update);
-router.delete("/product-delete/:id", productController.delete);
+router.put("/product-update/:id", authVarificationAdmin, productController.update);
+router.delete("/product-delete/:id", authVarificationAdmin, productController.delete);
 
 //For category
-router.post("/category-create", categoryController.create);
+router.post("/category-create", authVarificationAdmin, categoryController.create);
 router.get("/all-category/:per_page/:page_no", categoryController.allCategory);
 router.get("/single-category/:id", categoryController.singleCategory);
-router.put("/category-update/:id", categoryController.update);
-router.delete("/category-delete/:id", categoryController.delete);
+router.put("/category-update/:id", authVarificationAdmin, categoryController.update);
+router.delete("/category-delete/:id", authVarificationAdmin, categoryController.delete);
 
 //For brand
-router.post("/brand-create", brandController.create);
+router.post("/brand-create", authVarificationAdmin, brandController.create);
 router.get("/all-brand/:per_page/:page_no", brandController.allBrand);
 router.get("/single-brand/:id", brandController.singleBrand);
-router.put("/brand-update/:id", brandController.update);
-router.delete("/brand-delete/:id", brandController.delete);
+router.put("/brand-update/:id", authVarificationAdmin, brandController.update);
+router.delete("/brand-delete/:id", authVarificationAdmin, brandController.delete);
 
 module.exports = router;
